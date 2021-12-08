@@ -1,3 +1,26 @@
+.header {
+    display: flex;
+    height: 40px;
+    background-color: #aba3ff;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.header button {
+    height: 100%;
+    margin-right: 15px;
+    background-color: #ffc675;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    width: 70px;
+}
+
+.header button:hover {
+    background-color: #ff9705;
+    cursor: pointer;
+}
+
 .grid {
     display: flex;
     flex-direction: column;
