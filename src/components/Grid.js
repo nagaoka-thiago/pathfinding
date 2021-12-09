@@ -6,7 +6,7 @@ const { load, breadth_step, isVisited } = require('../algoritmos/breadth.js')
 
 const S_X = 10
 const S_Y = 10
-const F_X = 35
+const F_X = 16
 const F_Y = 10
 
 let START_X = S_X
@@ -17,24 +17,18 @@ let FINISH_Y = F_Y
 
 function Grid({ rows, cols }) {
     const [grid, setGrid] = useState([])
-    const [executarAlgo, setExecutarAlgo] = useState(false)
-    const [visitados, setVisitados] = useState([])
-    const [path, setPath] = useState([])
-
-    setInterval(() => {
-        if(executarAlgo){
-            let [terminou, visited, caminho] = breadth_step(grid, FINISH_X, FINISH_Y)
-            if(terminou) {
-                setPath(caminho)
-                setExecutarAlgo(false)
-            }
-            setVisitados(visited)
-        }
-    }, 50);
+    let [visitados, setVisitados] = useState([])
+    let [path, setPath] = useState([])
 
     const executar = () => {
         load(START_X, START_Y)
-        setExecutarAlgo(true)
+        const id = setInterval(() => {
+            let [t, v, p] = breadth_step(grid, FINISH_X, FINISH_Y)
+            setVisitados(visitados = v)
+            setPath(path = p)
+            console.log(visitados)
+            if(t) clearInterval(id)
+        }, 1000);
     }
 
     const limpar = () => {
@@ -62,14 +56,10 @@ function Grid({ rows, cols }) {
         }
         setGrid(newM)
     }
-
-    /*const isPath = (caminho_a, x, y) => {
-        for
-    }*/
     
     useEffect(() => {
         estadoInicial()
-    }, [])
+    }, [visitados])
 
     return (
         <div>
