@@ -6,7 +6,7 @@ const { load, breadth_step, isVisited } = require('../algoritmos/breadth.js')
 
 const S_X = 10
 const S_Y = 10
-const F_X = 16
+const F_X = 12
 const F_Y = 10
 
 let START_X = S_X
