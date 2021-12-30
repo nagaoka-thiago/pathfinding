@@ -28,7 +28,7 @@ const breadth_step = (grid, finish_x, finish_y) => {
     
     if(queue.length > 0) {
         const [current_x, current_y] = queue.shift()
-        if(current_x === finish_x && current_y === finish_y) return [true, visited, path]
+        if(current_x === finish_x && current_y === finish_y) return [true, [current_x, current_y], visited, path]
         
         visited.push([current_x, current_y])
         
@@ -55,7 +55,7 @@ const breadth_step = (grid, finish_x, finish_y) => {
             if(!achou)
                 path.push([current_x, current_y, new_x, new_y])
         }
-        return [false, visited, path]
+        return [false, [current_x, current_y], visited, path]
     }
     return []
 }

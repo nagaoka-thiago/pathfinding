@@ -6,7 +6,7 @@ const { load, breadth_step, isVisited } = require('../algoritmos/breadth.js')
 
 const S_X = 10
 const S_Y = 10
-const F_X = 12
+const F_X = 17
 const F_Y = 10
 
 let START_X = S_X
@@ -17,18 +17,19 @@ let FINISH_Y = F_Y
 
 function Grid({ rows, cols }) {
     const [grid, setGrid] = useState([])
-    let [visitados, setVisitados] = useState([])
-    let [path, setPath] = useState([])
+    const [visitados, setVisitados] = useState([])
+    const [path, setPath] = useState([])
+    const [current, setCurrent] = useState([])
 
     const executar = () => {
         load(START_X, START_Y)
         const id = setInterval(() => {
-            let [t, v, p] = breadth_step(grid, FINISH_X, FINISH_Y)
-            setVisitados(visitados = v)
-            setPath(path = p)
-            console.log(visitados)
+            let [t, c, v, p] = breadth_step(grid, FINISH_X, FINISH_Y)
+            setVisitados(v)
+            setPath(p)
+            setCurrent(c)
             if(t) clearInterval(id)
-        }, 1000);
+        }, 5);
     }
 
     const limpar = () => {
@@ -78,6 +79,7 @@ function Grid({ rows, cols }) {
                                                         eFinish={idx === FINISH_Y && jdx === FINISH_X}
                                                         eVisited={ isVisited(visitados, jdx, idx) }
                                                         ePath={ false }
+                                                        eCurrent={current[0] === jdx && current[1] === idx}
                                                     />
                                         })
                                     }
