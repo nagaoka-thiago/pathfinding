@@ -2,7 +2,7 @@ import './Grid.css'
 import Cell from './Cell.js'
 import React, { useState, useEffect } from 'react'
 
-const { load, breadth_step, isVisited } = require('../algoritmos/breadth.js')
+const breadth = require('../algoritmos/breadth.js')
 
 const S_X = 10
 const S_Y = 10
@@ -17,23 +17,28 @@ let FINISH_Y = F_Y
 
 function Grid({ rows, cols }) {
     const [grid, setGrid] = useState([])
-    const [visitados, setVisitados] = useState([])
-    const [path, setPath] = useState([])
-    const [current, setCurrent] = useState([])
+    let [path, setPath] = useState([])
+    let [current, setCurrent] = useState([])
+    let [algorithm, setAlgorithm] = useState('')
+    let id = null
 
     const executar = () => {
-        load(START_X, START_Y)
-        const id = setInterval(() => {
-            let [t, c, v, p] = breadth_step(grid, FINISH_X, FINISH_Y)
-            setVisitados(v)
-            setPath(p)
-            setCurrent(c)
-            if(t) clearInterval(id)
-        }, 5);
+        console.log(algorithm)
+        /*breadth.load(START_X, START_Y)
+        id = setInterval(() => {
+            let [t, c, p] = breadth.breadth_step(grid, setGrid, FINISH_X, FINISH_Y)
+            setCurrent(current = c)
+            if(t){
+                setPath(path = p)
+                clearInterval(id)
+                id = null
+            }
+        }, 5);*/
     }
 
     const limpar = () => {
         estadoInicial()
+        if(id !== null) clearInterval(id)
     }
 
     const estadoInicial = () => {
@@ -60,11 +65,18 @@ function Grid({ rows, cols }) {
     
     useEffect(() => {
         estadoInicial()
-    }, [visitados])
+    }, [])
 
     return (
         <div>
             <div className="header">
+                <select defaultValue={algorithm} onChange ={e => setAlgorithm(e.target.value)} className="algorithmSelector">
+                    <option value="">Selecione um algoritmo para executar</option>
+                    <option value="breadth">Breadth First Search</option>
+                    <option value="depth">Depth First Search</option>
+                    <option value="greedy">Greedy Search</option>
+                    <option value="astar">A*</option>
+                </select>
                 <button onClick={ executar }>Executar</button>
                 <button onClick={ limpar }>Limpar</button>
             </div>
@@ -77,8 +89,8 @@ function Grid({ rows, cols }) {
                                             return <Cell key={idx + rows * jdx  }
                                                         eStart={idx === START_Y && jdx === START_X}
                                                         eFinish={idx === FINISH_Y && jdx === FINISH_X}
-                                                        eVisited={ isVisited(visitados, jdx, idx) }
-                                                        ePath={ false }
+                                                        eVisited={ breadth.isVisited(grid, jdx, idx) }
+                                                        ePath={ breadth.isPath(path, jdx, idx) }
                                                         eCurrent={current[0] === jdx && current[1] === idx}
                                                     />
                                         })

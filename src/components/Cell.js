@@ -6,8 +6,8 @@ function Cell({ eStart, eFinish, eVisited, ePath, eCurrent }) {
         <div className={"cell" + (eStart ? " start" :
                                   eFinish ? " finish" :
                                   eCurrent ? " current" :
-                                  eVisited ? " visited" :
                                   ePath ? " path" :
+                                  eVisited ? " visited" :
                                   "")}>
         </div>
     )
