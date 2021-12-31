@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 
 const breadth = require('../algoritmos/breadth.js')
 const depth = require('../algoritmos/depth.js')
+const greedy = require('../algoritmos/greedy.js')
 
 const S_X = 10
 const S_Y = 10
@@ -117,7 +118,11 @@ function Grid({ rows, cols }) {
                                                         eFinish={idx === FINISH_Y && jdx === FINISH_X}
                                                         eVisited={ eVisitado(jdx, idx) }
                                                         ePath={ ePath(jdx, idx) }
-                                                        eCurrent={current[0] === jdx && current[1] === idx}
+                                                        eCurrent={current && current.length === 2 && current[0] === jdx && current[1] === idx}
+                                                        grid={grid}
+                                                        setGrid={setGrid}
+                                                        x={jdx}
+                                                        y={idx}
                                                     />
                                         })
                                     }
