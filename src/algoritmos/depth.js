@@ -9,22 +9,22 @@ const isPath = (path, x, y) => {
     return false
 }
 
-let queue = []
+let stack = []
 let path = []
 
 const load = (start_x, start_y) => {
-    queue = []
-    path = []
+    stack = []
+    stack = []
 
-    queue.push([start_x, start_y])
+    stack.push([start_x, start_y])
 }
 
-const breadth_step = (grid, setGrid, finish_x, finish_y) => {
+const depth_step = (grid, setGrid, finish_x, finish_y) => {
     const x_v = [0, 0, -1, 1]
     const y_v = [-1, 1, 0, 0]
     
-    if(queue.length > 0) {
-        const [current_x, current_y] = queue.shift()
+    if(stack.length > 0) {
+        const [current_x, current_y] = stack.pop()
         if(current_x === finish_x && current_y === finish_y) return [true, [current_x, current_y], path]
         
         grid[current_y][current_x] = 'V'
@@ -40,11 +40,11 @@ const breadth_step = (grid, setGrid, finish_x, finish_y) => {
             if(grid[new_y][new_x] === '#') continue
             if(isVisited(grid, new_x, new_y)) continue
 
-            queue.push([new_x, new_y])
+            stack.push([new_x, new_y])
         }
         return [false, [current_x, current_y], []]
     }
     return []
 }
 
-export { load, breadth_step, isVisited, isPath }
+export { load, depth_step, isVisited, isPath }

@@ -3,11 +3,12 @@ import Cell from './Cell.js'
 import React, { useState, useEffect } from 'react'
 
 const breadth = require('../algoritmos/breadth.js')
+const depth = require('../algoritmos/depth.js')
 
 const S_X = 10
 const S_Y = 10
 const F_X = 17
-const F_Y = 10
+const F_Y = 11
 
 let START_X = S_X
 let START_Y = S_Y
@@ -20,25 +21,48 @@ function Grid({ rows, cols }) {
     let [path, setPath] = useState([])
     let [current, setCurrent] = useState([])
     let [algorithm, setAlgorithm] = useState('')
-    let id = null
+    let [intervalId, setIntervalId] = useState(0)
 
     const executar = () => {
-        console.log(algorithm)
-        /*breadth.load(START_X, START_Y)
-        id = setInterval(() => {
+        if(algorithm === 'breadth') {
+            breadth.load(START_X, START_Y)
+            setIntervalId(intervalId = setInterval(() => {
             let [t, c, p] = breadth.breadth_step(grid, setGrid, FINISH_X, FINISH_Y)
-            setCurrent(current = c)
-            if(t){
-                setPath(path = p)
-                clearInterval(id)
-                id = null
-            }
-        }, 5);*/
+                setCurrent(current = c)
+                if(t){
+                    setPath(path = p)
+                    clearInterval(intervalId)
+                }
+            }, 5))
+        }
+        else if(algorithm === 'depth') {
+            depth.load(START_X, START_Y)
+            setIntervalId(intervalId = setInterval(() => {
+            let [t, c, p] = depth.depth_step(grid, setGrid, FINISH_X, FINISH_Y)
+                setCurrent(current = c)
+                if(t){
+                    setPath(path = p)
+                    clearInterval(intervalId)
+                }
+            }, 5))
+        }
     }
 
     const limpar = () => {
         estadoInicial()
-        if(id !== null) clearInterval(id)
+        clearInterval(intervalId)
+    }
+
+    const eVisitado = (jdx, idx) => {
+        if(algorithm === 'breadth') return breadth.isVisited(grid, jdx, idx)
+        else if(algorithm === 'depth') return depth.isVisited(grid, jdx, idx)
+        return false
+    }
+
+    const ePath = (jdx, idx) => {
+        if(algorithm === 'breadth') return breadth.isPath(path, jdx, idx)
+        else if(algorithm === 'depth') return depth.isPath(path, jdx, idx)
+        return false
     }
 
     const estadoInicial = () => {
@@ -61,6 +85,8 @@ function Grid({ rows, cols }) {
             newM.push(newL)
         }
         setGrid(newM)
+        setCurrent([])
+        setPath([])
     }
     
     useEffect(() => {
@@ -70,7 +96,7 @@ function Grid({ rows, cols }) {
     return (
         <div>
             <div className="header">
-                <select defaultValue={algorithm} onChange ={e => setAlgorithm(e.target.value)} className="algorithmSelector">
+                <select defaultValue={algorithm} onChange ={e => setAlgorithm(e.target.value)} id="algorithmSelector">
                     <option value="">Selecione um algoritmo para executar</option>
                     <option value="breadth">Breadth First Search</option>
                     <option value="depth">Depth First Search</option>
@@ -89,8 +115,8 @@ function Grid({ rows, cols }) {
                                             return <Cell key={idx + rows * jdx  }
                                                         eStart={idx === START_Y && jdx === START_X}
                                                         eFinish={idx === FINISH_Y && jdx === FINISH_X}
-                                                        eVisited={ breadth.isVisited(grid, jdx, idx) }
-                                                        ePath={ breadth.isPath(path, jdx, idx) }
+                                                        eVisited={ eVisitado(jdx, idx) }
+                                                        ePath={ ePath(jdx, idx) }
                                                         eCurrent={current[0] === jdx && current[1] === idx}
                                                     />
                                         })

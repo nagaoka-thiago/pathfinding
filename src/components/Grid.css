@@ -29,3 +29,13 @@
 .grid-linha {
     display: flex;
 }
+
+#algorithmSelector {
+    display: flex;
+    text-align: center;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    margin-right: 15px;
+    background-color: #ffc675;
+}
