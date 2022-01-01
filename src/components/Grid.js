@@ -94,11 +94,6 @@ function Grid({ rows, cols }) {
     }
 
     const estadoInicial = () => {
-        START_X = S_X
-        START_Y = S_Y
-
-        FINISH_X = F_X
-        FINISH_Y = F_Y
 
         const newM = []
         for(let i = 0; i < rows; i++) {
@@ -115,6 +110,23 @@ function Grid({ rows, cols }) {
         setGrid(newM)
         setCurrent([])
         setPath([])
+    }
+
+    const changeStartX = (e) => {
+        START_X = parseInt(e.target.value)
+        estadoInicial()
+    }
+    const changeStartY = (e) => {
+        START_Y = parseInt(e.target.value)
+        estadoInicial()
+    }
+    const changeFinishX = (e) => {
+        FINISH_X = parseInt(e.target.value)
+        estadoInicial()
+    }
+    const changeFinishY = (e) => {
+        FINISH_Y = parseInt(e.target.value)
+        estadoInicial()
     }
     
     useEffect(() => {
@@ -133,6 +145,44 @@ function Grid({ rows, cols }) {
                 </select>
                 <button onClick={ executar }>Executar</button>
                 <button onClick={ limpar }>Limpar</button>
+            </div>
+            <div className="subtitle-container">
+                <div className="subtitle-item">
+                    <div className="subtitle-item-color start"></div>
+                    <div className="subtitle-item-title">Nó começo</div>
+                </div>
+                <div className="subtitle-item">
+                    <div className="subtitle-item-color finish"></div>
+                    <div className="subtitle-item-title">Nó fim</div>
+                </div>
+                <div className="subtitle-item">
+                    <div className="subtitle-item-color visited"></div>
+                    <div className="subtitle-item-title">Nó visitado</div>
+                </div>
+                <div className="subtitle-item">
+                    <div className="subtitle-item-color path"></div>
+                    <div className="subtitle-item-title">Nó caminho</div>
+                </div>
+                <div className="subtitle-item">
+                    <div className="subtitle-item-color current"></div>
+                    <div className="subtitle-item-title">Nó atual</div>
+                </div>
+                <div className="subtitle-item">
+                    <div className="subtitle-item-color wall"></div>
+                    <div className="subtitle-item-title">Nó muro</div>
+                </div>
+            </div>
+            <div className="inputs-container">
+                <div className="input-container">
+                    <p>Defina o ponto inicial: 
+                    (<input type="number" min={0} max={cols} defaultValue={S_X} onChange={changeStartX} />,
+                    <input type="number" min={0} max={rows} defaultValue={S_Y} onChange={changeStartY} />)</p>
+                </div>
+                <div className="input-container">
+                    <p>Defina o ponto final: 
+                        (<input type="number" min={0} max={cols} defaultValue={F_X} onChange={changeFinishX} />,
+                        <input type="number" min={0} max={rows} defaultValue={F_Y} onChange={changeFinishY} />)</p>
+                </div>
             </div>
             <div className="grid">
                 {

@@ -6,25 +6,25 @@
 }
 
 .start {
-    background-color: green;
+    background-color: var(--start-node);
 }
 
 .finish {
-    background-color: red;
+    background-color: var(--finish-node);
 }
 
 .visited {
-    background-color: blue;
+    background-color: var(--visited-node);
 }
 
 .path {
-    background-color: lightcoral;
+    background-color: var(--path-node);
 }
 
 .current {
-    background-color: yellow;
+    background-color: var(--current-node);
 }
 
 .wall {
-    background-color: brown;
+    background-color: var(--wall-node);
 }

@@ -5,7 +5,7 @@ function App() {
   
   return (
     <div className="app">
-        <Grid rows={20}
+        <Grid rows={19}
               cols={40} />
     </div>
   );

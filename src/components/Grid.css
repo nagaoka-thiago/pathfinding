@@ -21,6 +21,80 @@
     cursor: pointer;
 }
 
+.subtitle-container {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-around;
+    flex: 1;
+}
+
+.subtitle-item {
+    display: flex;
+    margin-right: 10px;
+    border: 1px solid black;
+    flex: 1;
+}
+
+.subtitle-item-color {
+    display: flex;
+    width: 90px;
+    height: 100%;
+}
+
+.subtitle-item-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+}
+
+.start {
+    background-color: var(--start-node)
+}
+
+.finish {
+    background-color: var(--finish-node);
+}
+
+.visited {
+    background-color: var(--visited-node);
+}
+
+.path {
+    background-color: var(--path-node);
+}
+
+.current {
+    background-color: var(--current-node);
+}
+
+.wall {
+    background-color: var(--wall-node);
+}
+
+.inputs-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.input-container {
+    display: flex;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.input-container input{
+    border: none;
+    outline: none;
+    background-color: #ffc675;
+    margin-right: 10px;
+    font-size: 25px;
+}
+
 .grid {
     display: flex;
     flex-direction: column;

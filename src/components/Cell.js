@@ -6,7 +6,6 @@ function Cell({ eStart, eFinish, eVisited, ePath, eCurrent, eWall, grid, setGrid
         if(grid[y][x] === '.') grid[y][x] = '#'
         else if(grid[y][x] === '#') grid[y][x] = '.'
         setGrid(grid)
-        console.log(grid)
     }
     return (
         <div className={"cell" + (eStart ? " start" :

@@ -2,3 +2,12 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --start-node: green;
+  --finish-node: red;
+  --visited-node: blue;
+  --path-node: lightcoral;
+  --current-node: yellow;
+  --wall-node: brown;
+}
