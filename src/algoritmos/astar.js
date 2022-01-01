@@ -31,7 +31,7 @@ const load = (start_x, start_y) => {
 }
 
 const dist = (vx, vy, fx, fy) => {
-    return (Math.abs(vx - fx) + Math.abs(vy - fy))
+    return (Math.abs(vx - fx) + Math.abs(vy - fy)) + (Math.abs(cx - vx) + Math.abs(cy - vy))
 }
 
 const choose = (fx, fy) => {
@@ -49,7 +49,7 @@ const construct_path = (finish_x, finish_y, path) => {
     return []
 }
 
-const greedy_step = (grid, setGrid, finish_x, finish_y) => {
+const astar_step = (grid, setGrid, finish_x, finish_y) => {
     const x_v = [0, 0, -1, 1]
     const y_v = [-1, 1, 0, 0]
     
@@ -80,4 +80,4 @@ const greedy_step = (grid, setGrid, finish_x, finish_y) => {
     return []
 }
 
-export { load, greedy_step, isVisited, isPath }
+export { load, astar_step, isVisited, isPath }

@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 const breadth = require('../algoritmos/breadth.js')
 const depth = require('../algoritmos/depth.js')
 const greedy = require('../algoritmos/greedy.js')
+const astar = require('../algoritmos/astar.js')
 
 const S_X = 10
 const S_Y = 10
@@ -54,7 +55,17 @@ function Grid({ rows, cols }) {
                 setCurrent(current = c)
                 if(t){
                     setPath(path = p)
-                    console.log(path)
+                    clearInterval(intervalId)
+                }
+            }, 5))
+        }
+        else if(algorithm === 'astar') {
+            astar.load(START_X, START_Y)
+            setIntervalId(intervalId = setInterval(() => {
+            let [t, c, p] = astar.astar_step(grid, setGrid, FINISH_X, FINISH_Y)
+                setCurrent(current = c)
+                if(t){
+                    setPath(path = p)
                     clearInterval(intervalId)
                 }
             }, 5))
@@ -70,6 +81,7 @@ function Grid({ rows, cols }) {
         if(algorithm === 'breadth') return breadth.isVisited(grid, jdx, idx)
         else if(algorithm === 'depth') return depth.isVisited(grid, jdx, idx)
         else if(algorithm === 'greedy') return greedy.isVisited(grid, jdx, idx)
+        else if(algorithm === 'astar') return astar.isVisited(grid, jdx, idx)
         return false
     }
 
@@ -77,6 +89,7 @@ function Grid({ rows, cols }) {
         if(algorithm === 'breadth') return breadth.isPath(path, jdx, idx)
         else if(algorithm === 'depth') return depth.isPath(path, jdx, idx)
         else if(algorithm === 'greedy') return greedy.isPath(path, jdx, idx)
+        else if(algorithm === 'astar') return astar.isPath(path, jdx, idx)
         return false
     }
 
