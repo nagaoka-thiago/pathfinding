@@ -8,8 +8,8 @@ const greedy = require('../algoritmos/greedy.js')
 
 const S_X = 10
 const S_Y = 10
-const F_X = 17
-const F_Y = 11
+const F_X = 30
+const F_Y = 15
 
 let START_X = S_X
 let START_Y = S_Y
@@ -47,6 +47,18 @@ function Grid({ rows, cols }) {
                 }
             }, 5))
         }
+        else if(algorithm === 'greedy') {
+            greedy.load(START_X, START_Y)
+            setIntervalId(intervalId = setInterval(() => {
+            let [t, c, p] = greedy.greedy_step(grid, setGrid, FINISH_X, FINISH_Y)
+                setCurrent(current = c)
+                if(t){
+                    setPath(path = p)
+                    console.log(path)
+                    clearInterval(intervalId)
+                }
+            }, 5))
+        }
     }
 
     const limpar = () => {
@@ -57,12 +69,14 @@ function Grid({ rows, cols }) {
     const eVisitado = (jdx, idx) => {
         if(algorithm === 'breadth') return breadth.isVisited(grid, jdx, idx)
         else if(algorithm === 'depth') return depth.isVisited(grid, jdx, idx)
+        else if(algorithm === 'greedy') return greedy.isVisited(grid, jdx, idx)
         return false
     }
 
     const ePath = (jdx, idx) => {
         if(algorithm === 'breadth') return breadth.isPath(path, jdx, idx)
         else if(algorithm === 'depth') return depth.isPath(path, jdx, idx)
+        else if(algorithm === 'greedy') return greedy.isPath(path, jdx, idx)
         return false
     }
 
@@ -119,6 +133,7 @@ function Grid({ rows, cols }) {
                                                         eVisited={ eVisitado(jdx, idx) }
                                                         ePath={ ePath(jdx, idx) }
                                                         eCurrent={current && current.length === 2 && current[0] === jdx && current[1] === idx}
+                                                        eWall={ grid[idx][jdx] === '#' }
                                                         grid={grid}
                                                         setGrid={setGrid}
                                                         x={jdx}

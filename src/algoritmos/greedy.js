@@ -10,22 +10,37 @@ const isPath = (path, x, y) => {
 }
 
 let queue = []
-let path = []
+let path = new Map()
+let cx = 0
+let cy = 0
 
 const load = (start_x, start_y) => {
     queue = []
-    path = []
+    path = new Map()
 
     queue.push([start_x, start_y])
+    cx = start_x
+    cy = start_y
 }
 
 const dist = (vx, vy, fx, fy) => {
-    return Math.abs(vx - fx) + Math.abs(vy - fy)
+    return (Math.abs(vx - fx) + Math.abs(vy - fy))
 }
 
 const choose = (fx, fy) => {
-    queue.sort((a, b) => Math.abs(dist(a[0], a[1], fx, fy) - dist(b[0], b[1], fx, fy)))
+    queue.sort((a, b) => (dist(a[0], a[1], fx, fy) - dist(b[0], b[1], fx, fy)))
     return queue.shift()
+}
+
+const construct_path = (finish_x, finish_y, path) => {
+    
+    path.forEach((value, key) => {
+        if(value[0] === finish_x && value[1] === finish_y) {
+            console.log(finish_x, finish_y)
+            return [[finish_x, finish_y]].concat(construct_path(key[0], key[1], path))
+        }
+    });
+    return []
 }
 
 const greedy_step = (grid, setGrid, finish_x, finish_y) => {
@@ -34,11 +49,9 @@ const greedy_step = (grid, setGrid, finish_x, finish_y) => {
     
     if(queue.length > 0) {
         const [current_x, current_y] = choose(finish_x, finish_y)
-        if(current_x === finish_x && current_y === finish_y) return [true, [current_x, current_y], path]
-        
-        setGrid(grid)
-        path.push([current_x, current_y])
-        
+        if(current_x === finish_x && current_y === finish_y) {
+            return [true, [current_x, current_y], construct_path(finish_x, finish_y, path)]
+        }
         for(let i = 0; i < 4; i++) {
             const new_x = current_x + x_v[i]
             const new_y = current_y + y_v[i]
@@ -49,6 +62,9 @@ const greedy_step = (grid, setGrid, finish_x, finish_y) => {
             if(isVisited(grid, new_x, new_y)) continue
 
             grid[new_y][new_x] = 'V'
+            setGrid(grid)
+            
+            path.set([current_x, current_y], [new_x, new_y])
 
             queue.push([new_x, new_y])
         }
