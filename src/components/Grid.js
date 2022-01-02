@@ -94,7 +94,6 @@ function Grid({ rows, cols }) {
     }
 
     const estadoInicial = () => {
-
         const newM = []
         for(let i = 0; i < rows; i++) {
             const newL = []
@@ -113,20 +112,28 @@ function Grid({ rows, cols }) {
     }
 
     const changeStartX = (e) => {
+        grid[START_Y][START_X] = '.'
         START_X = parseInt(e.target.value)
-        estadoInicial()
+        grid[START_Y][START_X] = 'S'
+        setGrid(grid)
     }
     const changeStartY = (e) => {
+        grid[START_Y][START_X] = '.'
         START_Y = parseInt(e.target.value)
-        estadoInicial()
+        grid[START_Y][START_X] = 'S'
+        setGrid(grid)
     }
     const changeFinishX = (e) => {
+        grid[FINISH_Y][FINISH_X] = '.'
         FINISH_X = parseInt(e.target.value)
-        estadoInicial()
+        grid[FINISH_Y][FINISH_X] = 'F'
+        setGrid(grid)
     }
     const changeFinishY = (e) => {
+        grid[FINISH_Y][FINISH_X] = '.'
         FINISH_Y = parseInt(e.target.value)
-        estadoInicial()
+        grid[FINISH_Y][FINISH_X] = 'F'
+        setGrid(grid)
     }
     
     useEffect(() => {
