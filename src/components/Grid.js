@@ -19,8 +19,8 @@ let FINISH_X = F_X
 let FINISH_Y = F_Y
 
 function Grid({ rows, cols }) {
-    let [grid, setGrid] = useState([])
-    let [path, setPath] = useState([])
+    let [grid, setGrid] = useState([[]])
+    let [path, setPath] = useState([[]])
     let [current, setCurrent] = useState([])
     let [algorithm, setAlgorithm] = useState('')
     let [intervalId, setIntervalId] = useState(0)
@@ -70,6 +70,7 @@ function Grid({ rows, cols }) {
                 }
             }, 5))
         }
+        console.log('clicou executar')
     }
 
     const limpar = () => {
@@ -108,7 +109,7 @@ function Grid({ rows, cols }) {
         }
         setGrid(newM)
         setCurrent([])
-        setPath([])
+        setPath([[]])
     }
 
     const changeStartX = (e) => {
@@ -133,6 +134,12 @@ function Grid({ rows, cols }) {
         grid[FINISH_Y][FINISH_X] = '.'
         FINISH_Y = parseInt(e.target.value)
         grid[FINISH_Y][FINISH_X] = 'F'
+        setGrid(grid)
+    }
+
+    const makeWall = (x, y) => {
+        if(grid[y][x] === '.') grid[y][x] = '#'
+        else if(grid[y][x] === '#') grid[y][x] = '.'
         setGrid(grid)
     }
     
@@ -197,17 +204,16 @@ function Grid({ rows, cols }) {
                         return <div className="grid-linha" key={idx}>
                                     {
                                         linhas.map((_, jdx) => {
-                                            return <Cell key={idx + rows * jdx  }
+                                            return <div onClick={() => makeWall(jdx, idx)}>
+                                                    <Cell key={idx + rows * jdx  }
                                                         eStart={idx === START_Y && jdx === START_X}
                                                         eFinish={idx === FINISH_Y && jdx === FINISH_X}
                                                         eVisited={ eVisitado(jdx, idx) }
                                                         ePath={ ePath(jdx, idx) }
                                                         eCurrent={current && current.length === 2 && current[0] === jdx && current[1] === idx}
-                                                        grid={grid}
-                                                        setGrid={setGrid}
-                                                        x={jdx}
-                                                        y={idx}
+                                                        eWall={ grid[idx][jdx] === '#' }
                                                     />
+                                                    </div>
                                         })
                                     }
                             </div>
