@@ -70,7 +70,6 @@ function Grid({ rows, cols }) {
                 }
             }, 5))
         }
-        console.log('clicou executar')
     }
 
     const limpar = () => {
@@ -205,14 +204,14 @@ function Grid({ rows, cols }) {
                                     {
                                         linhas.map((_, jdx) => {
                                             return <div onClick={() => makeWall(jdx, idx)}>
-                                                    <Cell key={idx + rows * jdx  }
-                                                        eStart={idx === START_Y && jdx === START_X}
-                                                        eFinish={idx === FINISH_Y && jdx === FINISH_X}
-                                                        eVisited={ eVisitado(jdx, idx) }
-                                                        ePath={ ePath(jdx, idx) }
-                                                        eCurrent={current && current.length === 2 && current[0] === jdx && current[1] === idx}
-                                                        eWall={ grid[idx][jdx] === '#' }
-                                                    />
+                                                        <Cell key={idx + rows * jdx  }
+                                                            eStart={idx === START_Y && jdx === START_X}
+                                                            eFinish={idx === FINISH_Y && jdx === FINISH_X}
+                                                            eVisited={ eVisitado(jdx, idx) }
+                                                            ePath={ ePath(jdx, idx) }
+                                                            eCurrent={current && current.length === 2 && current[0] === jdx && current[1] === idx}
+                                                            eWall={ grid[idx][jdx] === '#' }
+                                                        />
                                                     </div>
                                         })
                                     }

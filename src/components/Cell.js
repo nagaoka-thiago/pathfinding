@@ -1,16 +1,21 @@
 import './Cell.css'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Cell({ eStart, eFinish, eVisited, ePath, eCurrent, eWall }) {
+
+    const [classe, setClasse] = useState('cell')
+    useEffect(() => {
+        setClasse((eStart ? 'cell start' :
+                            eFinish ? 'cell finish' :
+                            eCurrent ? 'cell current' :
+                            ePath ? 'cell path' :
+                            eVisited ? 'cell visited' :
+                            eWall ? 'cell wall' :
+                            'cell'))
+    }, [eStart, eFinish, eVisited, ePath, eCurrent, eWall])
+
     return (
-        <div className={'cell' + (eStart ? ' start' :
-                                  eFinish ? ' finish' :
-                                  eCurrent ? ' current' :
-                                  ePath ? ' path' :
-                                  eVisited ? ' visited' :
-                                  eWall ? ' wall' :
-                                  '')
-                        }>
+        <div className={ classe }>
         </div>
     )
 }
