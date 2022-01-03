@@ -19,7 +19,7 @@ let FINISH_X = F_X
 let FINISH_Y = F_Y
 
 function Grid({ rows, cols }) {
-    const [grid, setGrid] = useState([])
+    let [grid, setGrid] = useState([])
     let [path, setPath] = useState([])
     let [current, setCurrent] = useState([])
     let [algorithm, setAlgorithm] = useState('')
@@ -203,7 +203,6 @@ function Grid({ rows, cols }) {
                                                         eVisited={ eVisitado(jdx, idx) }
                                                         ePath={ ePath(jdx, idx) }
                                                         eCurrent={current && current.length === 2 && current[0] === jdx && current[1] === idx}
-                                                        eWall={ grid[idx][jdx] === '#' }
                                                         grid={grid}
                                                         setGrid={setGrid}
                                                         x={jdx}
