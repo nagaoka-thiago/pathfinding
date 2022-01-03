@@ -24,9 +24,11 @@ function Grid({ rows, cols }) {
     let [current, setCurrent] = useState([])
     let [algorithm, setAlgorithm] = useState('')
     let [intervalId, setIntervalId] = useState(0)
+    let [executando, setExecutando] = useState(false)
 
     const executar = () => {
         if(algorithm === 'breadth') {
+            setExecutando(true)
             breadth.load(START_X, START_Y)
             setIntervalId(intervalId = setInterval(() => {
             let [t, c, p] = breadth.breadth_step(grid, setGrid, FINISH_X, FINISH_Y)
@@ -34,10 +36,12 @@ function Grid({ rows, cols }) {
                 if(t){
                     setPath(path = p)
                     clearInterval(intervalId)
+                    setExecutando(false)
                 }
             }, 5))
         }
         else if(algorithm === 'depth') {
+            setExecutando(true)
             depth.load(START_X, START_Y)
             setIntervalId(intervalId = setInterval(() => {
             let [t, c, p] = depth.depth_step(grid, setGrid, FINISH_X, FINISH_Y)
@@ -45,10 +49,12 @@ function Grid({ rows, cols }) {
                 if(t){
                     setPath(path = p)
                     clearInterval(intervalId)
+                    setExecutando(false)
                 }
             }, 5))
         }
         else if(algorithm === 'greedy') {
+            setExecutando(true)
             greedy.load(START_X, START_Y)
             setIntervalId(intervalId = setInterval(() => {
             let [t, c, p] = greedy.greedy_step(grid, setGrid, FINISH_X, FINISH_Y)
@@ -56,10 +62,12 @@ function Grid({ rows, cols }) {
                 if(t){
                     setPath(path = p)
                     clearInterval(intervalId)
+                    setExecutando(false)
                 }
             }, 5))
         }
         else if(algorithm === 'astar') {
+            setExecutando(true)
             astar.load(START_X, START_Y)
             setIntervalId(intervalId = setInterval(() => {
             let [t, c, p] = astar.astar_step(grid, setGrid, FINISH_X, FINISH_Y)
@@ -67,6 +75,7 @@ function Grid({ rows, cols }) {
                 if(t){
                     setPath(path = p)
                     clearInterval(intervalId)
+                    setExecutando(false)
                 }
             }, 5))
         }
@@ -109,37 +118,53 @@ function Grid({ rows, cols }) {
         setGrid(newM)
         setCurrent([])
         setPath([[]])
+        setExecutando(false)
     }
 
     const changeStartX = (e) => {
-        grid[START_Y][START_X] = '.'
-        START_X = parseInt(e.target.value)
-        grid[START_Y][START_X] = 'S'
-        setGrid(grid)
+        if(!executando) {
+            let ng = grid.slice()
+            ng[START_Y][START_X] = '.'
+            START_X = parseInt(e.target.value)
+            ng[START_Y][START_X] = 'S'
+            setGrid(ng)
+        }
     }
     const changeStartY = (e) => {
-        grid[START_Y][START_X] = '.'
-        START_Y = parseInt(e.target.value)
-        grid[START_Y][START_X] = 'S'
-        setGrid(grid)
+        if(!executando) {
+            let ng = grid.slice()
+            ng[START_Y][START_X] = '.'
+            START_Y = parseInt(e.target.value)
+            ng[START_Y][START_X] = 'S'
+            setGrid(ng)
+        }
     }
     const changeFinishX = (e) => {
-        grid[FINISH_Y][FINISH_X] = '.'
-        FINISH_X = parseInt(e.target.value)
-        grid[FINISH_Y][FINISH_X] = 'F'
-        setGrid(grid)
+        if(!executando) {
+            let ng = grid.slice()
+            ng[FINISH_Y][FINISH_X] = '.'
+            FINISH_X = parseInt(e.target.value)
+            ng[FINISH_Y][FINISH_X] = 'F'
+            setGrid(ng)
+        }
     }
     const changeFinishY = (e) => {
-        grid[FINISH_Y][FINISH_X] = '.'
-        FINISH_Y = parseInt(e.target.value)
-        grid[FINISH_Y][FINISH_X] = 'F'
-        setGrid(grid)
+        if(!executando) {
+            let ng = grid.slice()
+            ng[FINISH_Y][FINISH_X] = '.'
+            FINISH_Y = parseInt(e.target.value)
+            ng[FINISH_Y][FINISH_X] = 'F'
+            setGrid(ng)
+        }
     }
 
     const makeWall = (x, y) => {
-        if(grid[y][x] === '.') grid[y][x] = '#'
-        else if(grid[y][x] === '#') grid[y][x] = '.'
-        setGrid(grid)
+        if(!executando) {
+            let ng = grid.slice()
+            if(ng[y][x] === '.') ng[y][x] = '#'
+            else if(ng[y][x] === '#') ng[y][x] = '.'
+            setGrid(ng)
+        }
     }
     
     useEffect(() => {
