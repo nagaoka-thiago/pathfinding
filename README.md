@@ -5,7 +5,9 @@ The following pathfinding algorithms were implemented to be visualized:
 - Greedy Search
 - A*
 
-The solution proposed in this project was to execute these algorithms using ReactJS, HTML, CSS and JavaScript.
+The solution proposed in this project was to execute these algorithms using ReactJS, HTML, CSS and JavaScript. It was based on the Pathfinding Visualizer implemented by Clément Mihailescu, which can be viewed here: https://www.youtube.com/watch?v=msttfIHHkak.
+
+My version is hosted on Heroku at this link: https://nagaoka-pathfinding-visualizer.herokuapp.com/
 
 ## Download and run in your computer
 If you would like to make some modifications, follow these commands:
